@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction — CodeAlpha</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🫀 Heart Disease Prediction</h1>
+            <p class="subtitle">Enter patient data to assess heart disease risk using ML</p>
+        </header>
+
+        {% if error %}
+        <div class="alert error">⚠️ {{ error }}</div>
+        {% endif %}
+
+        {% if prediction %}
+        <div class="result-card {% if risk_level == 0 %}success{% else %}danger{% endif %}">
+            <h2>{{ prediction }}</h2>
+            <p>Risk Probability: <strong>{{ probability }}</strong></p>
+        </div>
+        {% endif %}
+
+        <form method="POST" action="/predict" class="form-grid">
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" min="1" max="120"
+                       value="{{ features.age if features else 55 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="sex">Sex</label>
+                <select id="sex" name="sex" required>
+                    <option value="1" {% if features and features.sex == 1 %}selected{% endif %}>Male</option>
+                    <option value="0" {% if features and features.sex == 0 %}selected{% endif %}>Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cp">Chest Pain Type</label>
+                <select id="cp" name="cp" required>
+                    <option value="0" {% if features and features.cp == 0 %}selected{% endif %}>Typical Angina</option>
+                    <option value="1" {% if features and features.cp == 1 %}selected{% endif %}>Atypical Angina</option>
+                    <option value="2" {% if features and features.cp == 2 %}selected{% endif %}>Non-anginal Pain</option>
+                    <option value="3" {% if features and features.cp == 3 %}selected{% endif %}>Asymptomatic</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="trestbps">Resting Blood Pressure (mm Hg)</label>
+                <input type="number" id="trestbps" name="trestbps" min="80" max="250"
+                       value="{{ features.trestbps if features else 130 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="chol">Cholesterol (mg/dL)</label>
+                <input type="number" id="chol" name="chol" min="100" max="600"
+                       value="{{ features.chol if features else 240 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fbs">Fasting Blood Sugar > 120</label>
+                <select id="fbs" name="fbs" required>
+                    <option value="0" {% if features and features.fbs == 0 %}selected{% endif %}>No</option>
+                    <option value="1" {% if features and features.fbs == 1 %}selected{% endif %}>Yes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="restecg">Resting ECG</label>
+                <select id="restecg" name="restecg" required>
+                    <option value="0" {% if features and features.restecg == 0 %}selected{% endif %}>Normal</option>
+                    <option value="1" {% if features and features.restecg == 1 %}selected{% endif %}>ST-T Abnormality</option>
+                    <option value="2" {% if features and features.restecg == 2 %}selected{% endif %}>LV Hypertrophy</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="thalach">Max Heart Rate</label>
+                <input type="number" id="thalach" name="thalach" min="60" max="220"
+                       value="{{ features.thalach if features else 150 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="exang">Exercise-Induced Angina</label>
+                <select id="exang" name="exang" required>
+                    <option value="0" {% if features and features.exang == 0 %}selected{% endif %}>No</option>
+                    <option value="1" {% if features and features.exang == 1 %}selected{% endif %}>Yes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="oldpeak">ST Depression (oldpeak)</label>
+                <input type="number" id="oldpeak" name="oldpeak" step="0.1" min="0" max="7"
+                       value="{{ features.oldpeak if features else 1.0 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="slope">Slope of Peak ST</label>
+                <select id="slope" name="slope" required>
+                    <option value="0" {% if features and features.slope == 0 %}selected{% endif %}>Upsloping</option>
+                    <option value="1" {% if features and features.slope == 1 %}selected{% endif %}>Flat</option>
+                    <option value="2" {% if features and features.slope == 2 %}selected{% endif %}>Downsloping</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="ca">Major Vessels (0–3)</label>
+                <input type="number" id="ca" name="ca" min="0" max="3"
+                       value="{{ features.ca if features else 0 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="thal">Thalassemia</label>
+                <select id="thal" name="thal" required>
+                    <option value="1" {% if features and features.thal == 1 %}selected{% endif %}>Fixed Defect</option>
+                    <option value="2" {% if features and features.thal == 2 %}selected{% endif %}>Normal</option>
+                    <option value="3" {% if features and features.thal == 3 %}selected{% endif %}>Reversible Defect</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-predict">🩺 Predict Disease Risk</button>
+        </form>
+
+        <footer>
+            <p>CodeAlpha Machine Learning Internship — Disease Prediction from Medical Data</p>
+        </footer>
+    </div>
+</body>
+</html>

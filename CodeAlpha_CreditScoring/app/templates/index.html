@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Scoring Model — CodeAlpha</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏦 Credit Scoring Model</h1>
+            <p class="subtitle">Predict an applicant's creditworthiness using machine learning</p>
+        </header>
+
+        {% if error %}
+        <div class="alert error">⚠️ {{ error }}</div>
+        {% endif %}
+
+        {% if prediction %}
+        <div class="result-card {% if '✅' in prediction %}success{% else %}danger{% endif %}">
+            <h2>{{ prediction }}</h2>
+            <p>Confidence: <strong>{{ probability }}</strong></p>
+        </div>
+        {% endif %}
+
+        <form method="POST" action="/predict" class="form-grid">
+            <div class="form-group">
+                <label for="income">Annual Income ($)</label>
+                <input type="number" id="income" name="income" step="1000"
+                       value="{{ features.income if features else 65000 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" min="18" max="100"
+                       value="{{ features.age if features else 35 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="debt_ratio">Debt Ratio (0–1)</label>
+                <input type="number" id="debt_ratio" name="debt_ratio" step="0.01" min="0" max="1"
+                       value="{{ features.debt_ratio if features else 0.25 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="num_credit_lines">Number of Credit Lines</label>
+                <input type="number" id="num_credit_lines" name="num_credit_lines" min="0" max="30"
+                       value="{{ features.num_credit_lines if features else 5 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="payment_history">Payment History Score (0–100)</label>
+                <input type="number" id="payment_history" name="payment_history" step="1" min="0" max="100"
+                       value="{{ features.payment_history if features else 80 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="employment_years">Employment Years</label>
+                <input type="number" id="employment_years" name="employment_years" min="0" max="50"
+                       value="{{ features.employment_years if features else 8 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="loan_amount">Loan Amount ($)</label>
+                <input type="number" id="loan_amount" name="loan_amount" step="1000"
+                       value="{{ features.loan_amount if features else 25000 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="credit_utilization">Credit Utilization (0–1)</label>
+                <input type="number" id="credit_utilization" name="credit_utilization" step="0.01" min="0" max="1"
+                       value="{{ features.credit_utilization if features else 0.30 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="num_late_payments">Late Payments (last 2 yrs)</label>
+                <input type="number" id="num_late_payments" name="num_late_payments" min="0" max="30"
+                       value="{{ features.num_late_payments if features else 1 }}" required>
+            </div>
+
+            <div class="form-group checkbox-group">
+                <label>
+                    <input type="checkbox" id="has_mortgage" name="has_mortgage" value="1"
+                           {% if features and features.has_mortgage == 1 %}checked{% endif %}>
+                    Has Mortgage
+                </label>
+            </div>
+
+            <button type="submit" class="btn-predict">🔍 Predict Creditworthiness</button>
+        </form>
+
+        <footer>
+            <p>CodeAlpha Machine Learning Internship — Credit Scoring Model</p>
+        </footer>
+    </div>
+</body>
+</html>
