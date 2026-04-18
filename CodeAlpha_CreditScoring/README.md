@@ -1,7 +1,9 @@
-# Credit Scoring Model
+# 🏦 Credit Scoring Model
+
+> **CodeAlpha Machine Learning Internship — Task 1**
 
 ## Overview
-A machine-learning pipeline that predicts an individual's **creditworthiness** using financial features such as income, debt ratio, payment history, and more. Built as part of the **CodeAlpha Machine Learning Internship**.
+A machine-learning pipeline that predicts an individual's **creditworthiness** using financial features such as income, debt ratio, payment history, and more.
 
 Two classification models are trained and compared:
 - **Logistic Regression** — interpretable baseline
@@ -10,7 +12,7 @@ Two classification models are trained and compared:
 The project includes an interactive **Flask web application** for real-time predictions.
 
 ## Tech Stack
-`Python 3.10+` · `Scikit-learn` · `Pandas` · `NumPy` · `Matplotlib` · `Seaborn` · `Flask`
+`Python 3.10+` · `Scikit-learn` · `Pandas` · `NumPy` · `Matplotlib` · `Seaborn` · `Flask` · `Joblib`
 
 ## SETUP_INSTRUCTIONS
 
@@ -21,8 +23,8 @@ The project includes an interactive **Flask web application** for real-time pred
 ### Installation
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<your-username>/CodeAlpha_CreditScoring.git
-cd CodeAlpha_CreditScoring
+git clone https://github.com/koladinesh960-crypto/CodeAlpha_CreditScoreingModel.git
+cd CodeAlpha_CreditScoreingModel/CodeAlpha_CreditScoring
 
 # 2. (Optional) Create a virtual environment
 python -m venv venv
@@ -38,7 +40,7 @@ pip install -r requirements.txt
 python main.py
 ```
 This will:
-1. Generate a synthetic credit-scoring dataset (1 000 samples)
+1. Generate a synthetic credit-scoring dataset (1,000 samples)
 2. Preprocess and split into train/test sets
 3. Train Logistic Regression and Random Forest models
 4. Evaluate both models and save metrics + plots to `outputs/`
@@ -114,4 +116,4 @@ After running the pipeline, the `outputs/` folder will contain:
 - `feature_importance.png`
 
 ## Author
-**CodeAlpha Intern** — Machine Learning Internship Program
+**Kola Dinesh** — [CodeAlpha](https://www.codealpha.tech/) Machine Learning Internship Program
